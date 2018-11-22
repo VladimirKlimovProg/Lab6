@@ -207,7 +207,7 @@ namespace Lab6
                     }
                 }
             }
-            //В каких строках встрчается максимальный элемент
+            //В каких строках встречается максимальный элемент
             int[] stringsMaxElement = new int[countOfMaxElement];
             int count = 0;
             for (i = 0; i < stringSize; i++)
