@@ -22,6 +22,13 @@ namespace Lab6
             Console.WriteLine("3. Удаление строк, в котором есть число, совпадающее с максимальным элементом");
             Console.WriteLine("4. Назад");
         }
+        public static void PrintMenu2ndLevelString()
+        {
+            Console.WriteLine("1. Сформировать строку");
+            Console.WriteLine("2. Напечатать строку");
+            Console.WriteLine("3. Удаление первого и последнего предложения в строке");
+            Console.WriteLine("4. Назад");
+        }
 
         public static void PrintMenu3dLevel()
         {
@@ -29,6 +36,13 @@ namespace Lab6
             Console.WriteLine("2. Создать массив с помощью ДСЧ");
             Console.WriteLine("3. Назад");
         }
+        public static void PrintMenu3dLevelStr()
+        {
+            Console.WriteLine("1. Создать строку вручную");
+            Console.WriteLine("2. Создать строку с помощью массива строк");
+            Console.WriteLine("3. Назад");
+        }
+
         public static int InputNumber(string Text, params int[] sizes)
         {
 
@@ -80,9 +94,10 @@ namespace Lab6
                 switch (menuItemLevel1)
                 {
                     case 1:
-                        Matr();
+                        MatrMenu();
                         break;
                     case 2:
+                        StringMenu();
                         break;
                     case 3:
                         exit = true;
@@ -94,8 +109,128 @@ namespace Lab6
             } while (!exit);
         }
 
+        //Подменю "Строка"
+        private static void StringMenu()
+        {
+            bool createString = false;
+            int userAnswer, formStr;
+            string str = "";
+            do
+            {
+                Dialog.PrintMenu2ndLevelString();
+                userAnswer = Convert.ToInt32(Console.ReadLine());
+                switch (userAnswer)
+                {
+                    case 1:
+                        {
+                            Dialog.PrintMenu3dLevelStr();
+                            formStr = Convert.ToInt32(Console.ReadLine());
+                            switch (formStr)
+                            {
+                                case 1:
+                                    {
+                                        createString = FormStringConsole(out str);
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        createString = FormStringArrayOfStrings(out str);
+                                        break;
+                                    }
+                                default: break;
+                            }
+                            break;
+                        }
+                    case 2:
+                        {
+                            if (createString) PrintStr(str);
+                            else Console.WriteLine("Строка не сформирована");
+                            break;
+                        }
+                    case 3:
+                        {
+                            if (createString) DeleteFirstAndLastSentence (ref str);
+                            else Console.WriteLine("Строка не сформирована");
+                            break;
+                        }
+                    case 4: break;
+                    default: Console.WriteLine("Нет такого пункта в меню"); break;
+                }
+            } while (userAnswer != 4);
+        }
+
+        //Удаление первого и последнего предолжения в строке
+        private static void DeleteFirstAndLastSentence(ref string str)
+        {
+            str = str.Trim(' ', '.', '!', ',', '?',':', ';');
+            string[] arrayStr = str.Split('.', '!', '?');
+            DeleteFirstAndLastElementsFromArray(ref arrayStr);
+            str = string.Join(".",arrayStr);
+            str = str.Trim(' ');
+        }
+
+        //Удаление первого и последнего элементов в массиве
+        static void DeleteFirstAndLastElementsFromArray(ref string[] arr)
+        {
+            int numberOfElementsToDelete;
+            if (arr.Length == 1)
+            {
+                numberOfElementsToDelete = 1;
+            }
+            else
+            {
+                numberOfElementsToDelete = 2;
+            }
+            string[] temp = new string[arr.Length - numberOfElementsToDelete];
+            int j = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (i != 0 && i != arr.Length - 1)
+                {
+                    temp[j] = arr[i];
+                    j++;
+                }
+            }
+            arr = temp;
+            Console.WriteLine("Удаление выполнено!");
+        }
+
+        //Печать строки
+        private static void PrintStr(string str)
+        {
+            Console.WriteLine(str);
+        }
+
+        //Формирование строки вручную
+        private static bool FormStringConsole(out string str)
+        {
+            do
+            {
+                Console.WriteLine("Введите строку");
+                str = Console.ReadLine();
+                if (str == "")
+                {
+                    Console.WriteLine("Пустая строка. Повторите ввод.");
+                }
+            } while (str == "");
+            return true;
+        }
+
+        //Формирование строки с помощью массива строк
+        private static bool FormStringArrayOfStrings(out string str)
+        {
+            str = "";
+            string[] stAr = new string[4];
+            for (int i = 0; i < stAr.Length; i++)
+
+                stAr[i] = $"Строка {i+1}. ";
+
+            foreach (string rs in stAr) str = str + rs;
+            return true;
+        }
+
         //Подменю "Двумерный массив"
-        private static void Matr()
+        private static void MatrMenu()
         {
             bool createMatr = false;
             int userAnswer, formMatr;
