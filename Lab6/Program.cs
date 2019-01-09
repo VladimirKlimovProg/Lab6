@@ -43,6 +43,12 @@ namespace Lab6
             Console.WriteLine("3. Назад");
         }
 
+        /// <summary>
+        /// Ввод числа
+        /// </summary>
+        /// <param name="Text">Сообщение</param>
+        /// <param name="sizes">Ограничение на ввод чисел</param>
+        /// <returns>Число</returns>
         public static int InputNumber(string Text, params int[] sizes)
         {
 
@@ -50,27 +56,28 @@ namespace Lab6
             bool ok = false;
             do
             {
-                try
+                Console.WriteLine(Text);
+                bool success = Int32.TryParse(Console.ReadLine(), out number);
+                if (success)
                 {
-                    Console.WriteLine(Text);
-                    number = Convert.ToInt32(Console.ReadLine());
                     if (sizes.Length == 0)
                     {
                         return number;
                     }
-                    if (number >= sizes[0] && number <= sizes[1]) ok = true;
-                    else ok = false;
+                    if (number >= sizes[0] && number <= sizes[1])
+                    {
+                        ok = true;
+                    }
+                    else
+                    {
+                        ok = false;
+                    }
                 }
-                catch (FormatException)
+                else
                 {
-                    Console.WriteLine("Ошибка при вводе числа");
-                    ok = false;
+                    Console.WriteLine("Ошибка ввода");
                 }
-                catch (OverflowException)
-                {
-                    Console.WriteLine("Ошибка при вводе числа");
-                    ok = false;
-                }
+
             } while (!ok);
             return number;
         }
@@ -84,7 +91,10 @@ namespace Lab6
             MakeMenu(exit);
         }
 
-        //Главное меню
+        /// <summary>
+        /// Главное меню
+        /// </summary>
+        /// <param name="exit">Выход из меню</param>
         private static void MakeMenu(bool exit)
         {
             do
@@ -109,7 +119,9 @@ namespace Lab6
             } while (!exit);
         }
 
-        //Подменю "Строка"
+        /// <summary>
+        /// Подменю "Строка"
+        /// </summary>
         private static void StringMenu()
         {
             bool createString = false;
@@ -118,13 +130,13 @@ namespace Lab6
             do
             {
                 Dialog.PrintMenu2ndLevelString();
-                userAnswer = Convert.ToInt32(Console.ReadLine());
+                userAnswer = Dialog.InputNumber("Введите пункт меню", 1, 4);
                 switch (userAnswer)
                 {
                     case 1:
                         {
                             Dialog.PrintMenu3dLevelStr();
-                            formStr = Convert.ToInt32(Console.ReadLine());
+                            formStr = Dialog.InputNumber("Введите пункт меню", 1, 2);
                             switch (formStr)
                             {
                                 case 1:
@@ -137,29 +149,47 @@ namespace Lab6
                                         createString = FormStringArrayOfStrings(out str);
                                         break;
                                     }
-                                default: break;
+                                default:
+                                    break;
                             }
                             break;
                         }
                     case 2:
                         {
-                            if (createString) PrintStr(str);
-                            else Console.WriteLine("Строка не сформирована");
+                            if (createString)
+                            {
+                                PrintStr(str);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Строка не сформирована");
+                            }
                             break;
                         }
                     case 3:
                         {
-                            if (createString) DeleteFirstAndLastSentence (ref str);
-                            else Console.WriteLine("Строка не сформирована");
+                            if (createString)
+                            {
+                                DeleteFirstAndLastSentence(ref str);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Строка не сформирована");
+                            }
                             break;
                         }
-                    case 4: break;
-                    default: Console.WriteLine("Нет такого пункта в меню"); break;
+                    case 4:
+                        break;
+                    default:
+                        break;
                 }
             } while (userAnswer != 4);
         }
 
-        //Удаление первого и последнего предолжения в строке
+        /// <summary>
+        /// Удаление первого и последнего предолжения в строке
+        /// </summary>
+        /// <param name="str">Строка</param>
         private static void DeleteFirstAndLastSentence(ref string str)
         {
             str = str.Trim(' ', '.', '!', ',', '?',':', ';');
@@ -169,8 +199,11 @@ namespace Lab6
             str = str.Trim(' ');
         }
 
-        //Удаление первого и последнего элементов в массиве
-        static void DeleteFirstAndLastElementsFromArray(ref string[] arr)
+        /// <summary>
+        /// Удаление первого и последнего элементов в массиве
+        /// </summary>
+        /// <param name="arr">Массив</param>
+        private static void DeleteFirstAndLastElementsFromArray(ref string[] arr)
         {
             int numberOfElementsToDelete;
             if (arr.Length == 1)
@@ -195,13 +228,20 @@ namespace Lab6
             Console.WriteLine("Удаление выполнено!");
         }
 
-        //Печать строки
+        /// <summary>
+        /// Печать строки
+        /// </summary>
+        /// <param name="str">Строка</param>
         private static void PrintStr(string str)
         {
             Console.WriteLine(str);
         }
 
-        //Формирование строки вручную
+        /// <summary>
+        /// Формирование строки вручную
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns>Строка сформирована</returns>
         private static bool FormStringConsole(out string str)
         {
             do
@@ -216,7 +256,11 @@ namespace Lab6
             return true;
         }
 
-        //Формирование строки с помощью массива строк
+        /// <summary>
+        /// Формирование строки с помощью массива строк
+        /// </summary>
+        /// <param name="str">Переменная для хранения строки</param>
+        /// <returns>Массив строк сформирован</returns>
         private static bool FormStringArrayOfStrings(out string str)
         {
             str = "";
@@ -229,7 +273,9 @@ namespace Lab6
             return true;
         }
 
-        //Подменю "Двумерный массив"
+        /// <summary>
+        /// Подменю "Двумерный массив"
+        /// </summary>
         private static void MatrMenu()
         {
             bool createMatr = false;
@@ -280,7 +326,13 @@ namespace Lab6
             } while (userAnswer != 4);
         }
 
-        //Создание двумерного массива с помощью ручного ввода
+        /// <summary>
+        /// Создание двумерного массива с помощью ручного ввода
+        /// </summary>
+        /// <param name="stringSize">Количество строк</param>
+        /// <param name="columnSize">Количество столбцов</param>
+        /// <param name="matr">Двумерный массив</param>
+        /// <returns>Двумерный массив создан</returns>
         private static bool ConsoleFormMatr(out int stringSize, out int columnSize, out int[,] matr)
         {
             int i, j;
@@ -296,7 +348,13 @@ namespace Lab6
             return true;
         }
 
-        //Создание двумерного массива с помощью датчика случайных чисел
+        /// <summary>
+        /// Создание двумерного массива с помощью датчика случайных чисел
+        /// </summary>
+        /// <param name="stringSize">Количество строк</param>
+        /// <param name="columnSize">Количество столбцов</param>
+        /// <param name="matr">Двумерный массив</param>
+        /// <returns>Двумерный массив создан</returns>
         private static bool RandomFormMatr(out int stringSize, out int columnSize, out int[,] matr)
         {
             int i, j;
@@ -313,7 +371,12 @@ namespace Lab6
             return true;
         }
 
-        //Распечатка двумерного массива
+        /// <summary>
+        /// Распечатка двумерного массива
+        /// </summary>
+        /// <param name="stringSize">Количество строк</param>
+        /// <param name="columnSize">Количество столбцов</param>
+        /// <param name="matr">Двумерный массив</param>
         private static void PrintMatr(int stringSize, int columnSize, int[,] matr)
         {
             int i, j;
@@ -325,8 +388,13 @@ namespace Lab6
             }
         }
 
-        //Удаление строк с максимальным элементом
-        static void DeleteStrings(ref int stringSize, int columnSize, ref int[,] matr)
+        /// <summary>
+        /// Удаление строк с максимальным элементом
+        /// </summary>
+        /// <param name="stringSize">Количество строк</param>
+        /// <param name="columnSize">Количество столбцов</param>
+        /// <param name="matr">Двумерный массив</param>
+        private static void DeleteStrings(ref int stringSize, int columnSize, ref int[,] matr)
         {
             int i, j;
             int maxElement = FindMax2DArray(ref matr);
@@ -373,8 +441,12 @@ namespace Lab6
             Console.WriteLine("Удаление выполнено!");
         }
 
-        //Поиск максимального элемента в двумерном массиве
-        static int FindMax2DArray(ref int[,] matr)
+        /// <summary>
+        /// Поиск максимального элемента в двумерном массиве
+        /// </summary>
+        /// <param name="matr">Двумерный массив</param>
+        /// <returns>Максимальный элемент</returns>
+        private static int FindMax2DArray(ref int[,] matr)
         {
             int currentMaxElement = Int32.MinValue;
             foreach (var element in matr)
