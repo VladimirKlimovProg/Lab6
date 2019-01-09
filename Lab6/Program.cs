@@ -285,13 +285,13 @@ namespace Lab6
             do
             {
                 Dialog.PrintMenu2ndLevelArray();
-                userAnswer = Convert.ToInt32(Console.ReadLine());
+                userAnswer = Dialog.InputNumber("Введите пункт меню", 1, 4);
                 switch (userAnswer)
                 {
                     case 1:
                         {
                             Dialog.PrintMenu3dLevel();
-                            formMatr = Convert.ToInt32(Console.ReadLine());
+                            formMatr = Dialog.InputNumber("Введите пункт меню", 1, 2);
                             switch (formMatr)
                             {
                                 case 1:
@@ -310,18 +310,32 @@ namespace Lab6
                         }
                     case 2:
                         {
-                            if (createMatr) PrintMatr(stringSize, columnSize, matr);
-                            else Console.WriteLine("Массив не сформирован");
+                            if (createMatr)
+                            {
+                                PrintMatr(stringSize, columnSize, matr);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Массив не сформирован");
+                            }
                             break;
                         }
                     case 3:
                         {
-                            if (createMatr) DeleteStrings(ref stringSize, columnSize, ref matr);
-                            else Console.WriteLine("Массив не сформирован");
+                            if (createMatr)
+                            {
+                                DeleteStrings(ref stringSize, columnSize, ref matr);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Массив не сформирован");
+                            }
                             break;
                         }
-                    case 4: break;
-                    default: Console.WriteLine("Нет такого пункта в меню"); break;
+                    case 4:
+                        break;
+                    default:
+                        break;
                 }
             } while (userAnswer != 4);
         }
