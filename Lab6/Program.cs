@@ -136,7 +136,7 @@ namespace Lab6
                     case 1:
                         {
                             Dialog.PrintMenu3dLevelStr();
-                            formStr = Dialog.InputNumber("Введите пункт меню", 1, 2);
+                            formStr = Dialog.InputNumber("Введите пункт меню", 1, 3);
                             switch (formStr)
                             {
                                 case 1:
@@ -171,6 +171,7 @@ namespace Lab6
                             if (createString)
                             {
                                 DeleteFirstAndLastSentence(ref str);
+                                Console.WriteLine("Удаление выполнено!");
                             }
                             else
                             {
@@ -193,39 +194,27 @@ namespace Lab6
         private static void DeleteFirstAndLastSentence(ref string str)
         {
             str = str.Trim(' ', '.', '!', ',', '?',':', ';');
-            string[] arrayStr = str.Split('.', '!', '?');
-            DeleteFirstAndLastElementsFromArray(ref arrayStr);
-            str = string.Join(".",arrayStr);
-            str = str.Trim(' ');
-        }
-
-        /// <summary>
-        /// Удаление первого и последнего элементов в массиве
-        /// </summary>
-        /// <param name="arr">Массив</param>
-        private static void DeleteFirstAndLastElementsFromArray(ref string[] arr)
-        {
-            int numberOfElementsToDelete;
-            if (arr.Length == 1)
+            int firstIndex = 0;
+            int lastIndex = 0;
+            //поиск первого разделителя
+            for (int i = 0; i < str.Length; i++)
             {
-                numberOfElementsToDelete = 1;
-            }
-            else
-            {
-                numberOfElementsToDelete = 2;
-            }
-            string[] temp = new string[arr.Length - numberOfElementsToDelete];
-            int j = 0;
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (i != 0 && i != arr.Length - 1)
-                {
-                    temp[j] = arr[i];
-                    j++;
+                if ((str[i] == '.') || (str[i] == '!') || (str[i] == '?')){
+                    firstIndex = i;
+                    break;
                 }
             }
-            arr = temp;
-            Console.WriteLine("Удаление выполнено!");
+            //поиск второго разделителя
+            for (int i = str.Length-1; i >=0 ; i--)
+            {
+                if ((str[i] == '.') || (str[i] == '!') || (str[i] == '?'))
+                {
+                    lastIndex = i;
+                    break;
+                }
+            }
+            str = str.Substring(firstIndex + 1, lastIndex-firstIndex);
+            str = str.Trim(' ');
         }
 
         /// <summary>
@@ -291,7 +280,7 @@ namespace Lab6
                     case 1:
                         {
                             Dialog.PrintMenu3dLevel();
-                            formMatr = Dialog.InputNumber("Введите пункт меню", 1, 2);
+                            formMatr = Dialog.InputNumber("Введите пункт меню", 1, 3);
                             switch (formMatr)
                             {
                                 case 1:
