@@ -64,14 +64,7 @@ namespace Lab6
                     {
                         return number;
                     }
-                    if (number >= sizes[0] && number <= sizes[1])
-                    {
-                        ok = true;
-                    }
-                    else
-                    {
-                        ok = false;
-                    }
+                    ok = number >= sizes[0] && number <= sizes[1];
                 }
                 else
                 {
@@ -171,7 +164,7 @@ namespace Lab6
                             if (createString)
                             {
                                 DeleteFirstAndLastSentence(ref str);
-                                Console.WriteLine("Удаление выполнено!");
+                                
                             }
                             else
                             {
@@ -213,8 +206,16 @@ namespace Lab6
                     break;
                 }
             }
-            str = str.Substring(firstIndex + 1, lastIndex-firstIndex);
-            str = str.Trim(' ');
+            if ((firstIndex == 0)||(lastIndex == 0)){
+                Console.WriteLine("Предложение не найдено");
+            }
+            else
+            {
+                str = str.Substring(firstIndex + 1, lastIndex - firstIndex);
+                str = str.Trim(' ');
+                Console.WriteLine("Удаление выполнено");
+            }
+
         }
 
         /// <summary>
